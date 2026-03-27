@@ -79,8 +79,8 @@ export const config = {
       accountName: "TA CHI HAO",
     },
     bride: {
-      bank: "Techcombank",
-      accountNumber: "987654321",
+      bank: "VIETCOMBANK",
+      accountNumber: "0371000483268",
       accountName: "NGUYEN HUU PHUONG NHI",
     }
   },
