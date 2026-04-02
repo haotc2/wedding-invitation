@@ -1,6 +1,6 @@
 export const config = {
-  heroImage: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1920", // Background for Hero section
-  audioUrl: "/Beautiful In White.mp3", // Background music
+  mainBackground: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1920", // Background for Hero section
+  audioUrl: "/beautiful-in-white.mp3", // Background music
   groom: {
     name: "Chí Hào",
     birthDate: "21/10/1995",
@@ -85,5 +85,5 @@ export const config = {
     }
   },
   // Link Google Apps Script để nhận dữ liệu đổ về Google Sheets
-  googleSheetUrl: "YOUR_GOOGLE_SHEET_URL"
+  googleSheetUrl: "https://script.google.com/macros/s/AKfycbw0xLXGQOzOD_DMwI-EN1H97O1MeKnVoeZN-dCioglz6M7UvuTlgju_H43dkz0bbks/exec"
 };

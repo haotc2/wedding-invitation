@@ -49,12 +49,24 @@ const FallingHearts = () => {
     </div>
   );
 };
-const Hero = () => {
+
+
+/* Hệ thống tự động chuyển đổi link Google Drive sang định dạng hiển thị trực tiếp */
+const getDirectLink = (url) => {
+  if (url && typeof url === 'string' && url.includes('drive.google.com')) {
+    const id = url.match(/[-\w]{25,}/);
+    if (id) return `https://lh3.googleusercontent.com/d/${id[0]}`;
+  }
+  return url;
+};
+
+const Hero = ({ remoteConfig }) => {
   const mainEvent = config.events[1] || config.events[0];
   const [day, month, year] = mainEvent.dayMonth.split('/').concat(mainEvent.year);
+  const mainBackground = getDirectLink(remoteConfig?.mainbackground || config.mainBackground);
 
   return (
-    <section className="hero" style={{ backgroundImage: `url(${config.heroImage})` }}>
+    <section className="hero" style={{ backgroundImage: `url(${mainBackground})` }}>
       <div className="hero-overlay"></div>
       <FallingHearts />
       <div className="hero-glass-container" data-aos="zoom-in" data-aos-duration="1500">
@@ -93,52 +105,59 @@ const Hero = () => {
 
 // Countdown moved below Events
 
-const Couple = () => (
-  <section className="couple bg-white">
-    <div className="container">
-      <div className="couple-header" data-aos="fade-up" style={{ position: 'relative' }}>
-        <p className="intro-text">GIỚI THIỆU</p>
-        <h2 className="couple-title">CÔ DÂU VÀ CHÚ RỂ</h2>
-        <MusicPlayer />
-      </div>
-      <div className="couple-grid-new">
-        <div className="couple-card" data-aos="fade-right" style={{ backgroundImage: `url(${config.groom.image})` }}>
-          <div className="card-overlay-gradient"></div>
-          <div className="card-content">
-            <h3 className="card-name">{config.groom.name}</h3>
-            <p className="card-date">{config.groom.birthDate}</p>
-            <p className="card-bio">{config.groom.bio}</p>
-            <div className="card-socials">
-              <button className="social-icon-btn">📞</button>
-              <button className="social-icon-btn">f</button>
-              <button className="social-icon-btn">𝕏</button>
-              <button className="social-icon-btn">📸</button>
-            </div>
-          </div>
-        </div>
-        <div className="couple-card" data-aos="fade-left" style={{ backgroundImage: `url(${config.bride.image})` }}>
-          <div className="card-overlay-gradient"></div>
-          <div className="card-content">
-            <h3 className="card-name">{config.bride.name}</h3>
-            <p className="card-date">{config.bride.birthDate}</p>
-            <p className="card-bio">{config.bride.bio}</p>
-            <div className="card-socials">
-              <button className="social-icon-btn">📞</button>
-              <button className="social-icon-btn">f</button>
-              <button className="social-icon-btn">𝕏</button>
-              <button className="social-icon-btn">📸</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-);
+const Couple = ({ remoteConfig }) => {
+  const groomImage = getDirectLink(remoteConfig?.groomimage || config.groom.image);
+  const brideImage = getDirectLink(remoteConfig?.brideimage || config.bride.image);
 
-const Gallery = () => {
+  return (
+    <section className="couple bg-white">
+      <div className="container">
+        <div className="couple-header" data-aos="fade-up" style={{ position: 'relative' }}>
+          <p className="intro-text">GIỚI THIỆU</p>
+          <h2 className="couple-title">CÔ DÂU VÀ CHÚ RỂ</h2>
+          <MusicPlayer />
+        </div>
+        <div className="couple-grid-new">
+          <div className="couple-card" data-aos="fade-right" style={{ backgroundImage: `url(${groomImage})` }}>
+            <div className="card-overlay-gradient"></div>
+            <div className="card-content">
+              <h3 className="card-name">{config.groom.name}</h3>
+              <p className="card-date">{config.groom.birthDate}</p>
+              <p className="card-bio">{config.groom.bio}</p>
+              <div className="card-socials">
+                <button className="social-icon-btn">📞</button>
+                <button className="social-icon-btn">f</button>
+                <button className="social-icon-btn">𝕏</button>
+                <button className="social-icon-btn">📸</button>
+              </div>
+            </div>
+          </div>
+          <div className="couple-card" data-aos="fade-left" style={{ backgroundImage: `url(${brideImage})` }}>
+            <div className="card-overlay-gradient"></div>
+            <div className="card-content">
+              <h3 className="card-name">{config.bride.name}</h3>
+              <p className="card-date">{config.bride.birthDate}</p>
+              <p className="card-bio">{config.bride.bio}</p>
+              <div className="card-socials">
+                <button className="social-icon-btn">📞</button>
+                <button className="social-icon-btn">f</button>
+                <button className="social-icon-btn">𝕏</button>
+                <button className="social-icon-btn">📸</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const Gallery = ({ remoteGallery }) => {
   const [selectedIndex, setSelectedIndex] = useState(null);
+  const images = remoteGallery || [];
 
   useEffect(() => {
+    // Xử lý khóa cuộn chuột khi xem ảnh
     if (selectedIndex !== null) {
       document.body.style.overflow = 'hidden';
     } else {
@@ -148,12 +167,12 @@ const Gallery = () => {
 
   const handlePrev = (e) => {
     e.stopPropagation();
-    setSelectedIndex((prev) => (prev === 0 ? config.gallery.length - 1 : prev - 1));
+    setSelectedIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
   };
 
   const handleNext = (e) => {
     e.stopPropagation();
-    setSelectedIndex((prev) => (prev === config.gallery.length - 1 ? 0 : prev + 1));
+    setSelectedIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
   };
 
   return (
@@ -161,7 +180,7 @@ const Gallery = () => {
       <div className="container">
         <h2 className="couple-title" data-aos="fade-up">ALBUM ẢNH</h2>
         <div className="gallery-grid">
-          {config.gallery.map((img, idx) => (
+          {images.map((img, idx) => (
             <div
               key={idx}
               className="gallery-item"
@@ -179,11 +198,8 @@ const Gallery = () => {
       {selectedIndex !== null && (
         <div className="lightbox-overlay" onClick={() => setSelectedIndex(null)}>
           <button className="lightbox-close" onClick={() => setSelectedIndex(null)}>✕</button>
-
           <button className="lightbox-nav prev" onClick={handlePrev}>&#10094;</button>
-
-          <img src={config.gallery[selectedIndex]} alt="Enlarged" className="lightbox-img" onClick={(e) => e.stopPropagation()} />
-
+          <img src={images[selectedIndex]} alt="Enlarged" className="lightbox-img" onClick={(e) => e.stopPropagation()} />
           <button className="lightbox-nav next" onClick={handleNext}>&#10095;</button>
         </div>
       )}
@@ -191,7 +207,7 @@ const Gallery = () => {
   );
 };
 
-const Events = () => {
+const Events = ({ remoteConfig }) => {
   const [showPhonePopup, setShowPhonePopup] = useState(false);
 
   return (
@@ -199,10 +215,13 @@ const Events = () => {
       <div className="events-container-new">
         {config.events.map((event, idx) => {
           const [day, month] = event.dayMonth.split('/');
+          const remoteKey = `event${idx + 1}image`;
+          const eventImage = getDirectLink(remoteConfig?.[remoteKey] || event.image);
+
           return (
             <div key={idx} className="event-card-new" data-aos="fade-up" data-aos-delay={idx * 200}>
               <div className="event-arch-wrapper">
-                <img src={event.image} alt={event.title} className="event-arch-img-new" />
+                <img src={eventImage} alt={event.title} className="event-arch-img-new" />
               </div>
 
               <div className="event-info-new">
@@ -269,7 +288,7 @@ const Events = () => {
   );
 };
 
-const Countdown = () => {
+const Countdown = ({ remoteConfig }) => {
   const [timeLeft, setTimeLeft] = useState({});
 
   useEffect(() => {
@@ -312,7 +331,7 @@ const Countdown = () => {
         </div>
 
         <div className="countdown-events-wrapper">
-          <Events />
+          <Events remoteConfig={remoteConfig} />
         </div>
       </div>
     </section>
@@ -364,12 +383,16 @@ const RSVP = () => {
 
     setIsSubmitting(true);
     const formData = new FormData(e.target);
+    const params = new URLSearchParams();
+    for (const [key, value] of formData) {
+      params.append(key, value);
+    }
 
     try {
       await fetch(config.googleSheetUrl, {
         method: "POST",
         mode: "no-cors",
-        body: formData
+        body: params
       });
 
       alert("Cảm ơn bạn đã báo danh! Dữ liệu đã được ghi nhận.");
@@ -428,8 +451,31 @@ const BankInfo = () => (
 
 function App() {
   const [showRsvpIcon, setShowRsvpIcon] = useState(true);
+  const [remoteData, setRemoteData] = useState({ config: {}, gallery: config.gallery || [] });
 
   useEffect(() => {
+    const fetchRemoteData = async () => {
+      try {
+        const response = await fetch(config.googleSheetUrl);
+        const data = await response.json();
+        if (data && typeof data === 'object' && data.config) {
+          // Convert all keys to lowercase for case-insensitive matching
+          const lowerConfig = {};
+          Object.keys(data.config).forEach(key => {
+            lowerConfig[key.toLowerCase()] = data.config[key];
+          });
+
+          setRemoteData({
+            config: lowerConfig,
+            gallery: ((data.gallery && data.gallery.length > 0) ? data.gallery : config.gallery).map(url => getDirectLink(url))
+          });
+        }
+      } catch (error) {
+        console.error("Error fetching remote config:", error);
+      }
+    };
+    fetchRemoteData();
+
     AOS.init({
       duration: 1000,
       once: true,
@@ -438,7 +484,6 @@ function App() {
     });
 
     const handleScroll = () => {
-      // Hide button when near bottom (e.g., within 800px of the bottom)
       const isNearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 800;
       setShowRsvpIcon(!isNearBottom);
     };
@@ -449,10 +494,11 @@ function App() {
 
   return (
     <div className="App">
-      <Hero />
-      <Couple />
-      <Gallery />
-      <Countdown />
+      <FallingHearts />
+      <Hero remoteConfig={remoteData.config} />
+      <Couple remoteConfig={remoteData.config} />
+      <Gallery remoteGallery={remoteData.gallery} />
+      <Countdown remoteConfig={remoteData.config} />
       <Timeline />
       <LoveStory />
       <RSVP />
