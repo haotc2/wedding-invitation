@@ -4,11 +4,29 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
   padding: 2rem 1rem;
   overflow: hidden;
+}
+
+.hero-bg-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  animation: kenBurns 18s ease-in-out infinite alternate;
+}
+
+@keyframes kenBurns {
+  0% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(1.12);
+  }
 }
 
 .hero-overlay {
@@ -25,8 +43,8 @@
   position: relative;
   z-index: 10;
   background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
   border: 1px solid rgba(255, 255, 255, 0.3);
   padding: 3.5rem 2rem;
   width: 100%;
@@ -1122,5 +1140,46 @@
   .date-year-small {
     font-size: 0.9rem;
     font-weight: 600;
+  }
+}
+
+/* --- Hero Mobile Tweak --- */
+@media (max-width: 770px) {
+  .hero-glass-container {
+    padding: 2rem 1.2rem;
+    max-width: 90%;
+    margin: 0 10px;
+  }
+
+  .hero-name-text {
+    font-size: 2.2rem;
+  }
+
+  .hero-script-subtitle {
+    font-size: 1.3rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .hero-ampersand {
+    font-size: 1.2rem;
+    margin: 0.1rem 0;
+  }
+
+  .hero-date-block {
+    margin: 1.5rem 0;
+    padding: 0.5rem 0;
+  }
+
+  .day-number {
+    font-size: 1.8rem;
+  }
+
+  .location-name {
+    font-size: 1.2rem;
+  }
+
+  .location-address {
+    font-size: 0.75rem;
+    line-height: 1.3;
   }
 }

@@ -67,7 +67,8 @@ const Hero = ({ remoteConfig }) => {
   const mainBackground = getDirectLink(remoteConfig?.mainbackground || config.mainBackground, 1600);
 
   return (
-    <section className="hero" style={{ backgroundImage: `url(${mainBackground})` }}>
+    <section className="hero">
+      <img src={mainBackground} alt="" className="hero-bg-img" />
       <div className="hero-overlay"></div>
       <FallingHearts />
       <div className="hero-glass-container" data-aos="zoom-in" data-aos-duration="1500">
