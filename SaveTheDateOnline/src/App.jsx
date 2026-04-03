@@ -31,16 +31,16 @@ const MusicPlayer = () => {
 const FallingHearts = () => {
   return (
     <div className="falling-hearts-container">
-      {[...Array(30)].map((_, i) => (
+      {[...Array(20)].map((_, i) => (
         <div
           key={i}
           className="heart-particle"
           style={{
             left: `${Math.random() * 100}%`,
-            animationDuration: `${Math.random() * 8 + 12}s`, // Very slow fall (12-20s)
-            animationDelay: `${Math.random() * 10}s`,
-            fontSize: `${Math.random() * 15 + 10}px`,
-            opacity: Math.random() * 0.5 + 0.3,
+            animationDuration: `${Math.random() * 15 + 20}s`, // Rất chậm (20-35s)
+            animationDelay: `${Math.random() * 15}s`,
+            fontSize: `${Math.random() * 12 + 10}px`,
+            opacity: Math.random() * 0.4 + 0.2, // Mờ ảo hơn
           }}
         >
           ❤️
@@ -504,7 +504,6 @@ function App() {
 
   return (
     <div className="App">
-      <FallingHearts />
       <Hero remoteConfig={remoteData.config} />
       <Couple remoteConfig={remoteData.config} />
       <Gallery remoteGallery={remoteData.gallery} />
