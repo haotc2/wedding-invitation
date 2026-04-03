@@ -51,11 +51,12 @@ const FallingHearts = () => {
 };
 
 
-/* Hệ thống tự động chuyển đổi link Google Drive sang định dạng hiển thị trực tiếp */
-const getDirectLink = (url) => {
+/* Hệ thống tự động chuyển đổi link Drive sang định dạng thumbnail (được nén và tối ưu nhất để tránh lỗi 429) */
+const getDirectLink = (url, width = 1200) => {
   if (url && typeof url === 'string' && url.includes('drive.google.com')) {
     const id = url.match(/[-\w]{25,}/);
-    if (id) return `https://lh3.googleusercontent.com/d/${id[0]}`;
+    // Sử dụng thumbnail API ổn định hơn và ít bị Google "phạt" 429 hơn so với lấy ảnh gốc trực tiếp
+    if (id) return `https://drive.google.com/thumbnail?id=${id[0]}&sz=w${width}`;
   }
   return url;
 };
@@ -63,7 +64,7 @@ const getDirectLink = (url) => {
 const Hero = ({ remoteConfig }) => {
   const mainEvent = config.events[1] || config.events[0];
   const [day, month, year] = mainEvent.dayMonth.split('/').concat(mainEvent.year);
-  const mainBackground = getDirectLink(remoteConfig?.mainbackground || config.mainBackground);
+  const mainBackground = getDirectLink(remoteConfig?.mainbackground || config.mainBackground, 1600);
 
   return (
     <section className="hero" style={{ backgroundImage: `url(${mainBackground})` }}>
@@ -106,8 +107,8 @@ const Hero = ({ remoteConfig }) => {
 // Countdown moved below Events
 
 const Couple = ({ remoteConfig }) => {
-  const groomImage = getDirectLink(remoteConfig?.groomimage || config.groom.image);
-  const brideImage = getDirectLink(remoteConfig?.brideimage || config.bride.image);
+  const groomImage = getDirectLink(remoteConfig?.groomimage || config.groom.image, 800);
+  const brideImage = getDirectLink(remoteConfig?.brideimage || config.bride.image, 800);
 
   return (
     <section className="couple bg-white">
@@ -188,7 +189,7 @@ const Gallery = ({ remoteGallery }) => {
               data-aos-delay={idx * 50}
               onClick={() => setSelectedIndex(idx)}
             >
-              <img src={img} alt={`Gallery ${idx}`} loading="lazy" />
+              <img src={getDirectLink(img, 400)} alt={`Gallery ${idx}`} loading="lazy" />
             </div>
           ))}
         </div>
@@ -216,7 +217,7 @@ const Events = ({ remoteConfig }) => {
         {config.events.map((event, idx) => {
           const [day, month] = event.dayMonth.split('/');
           const remoteKey = `event${idx + 1}image`;
-          const eventImage = getDirectLink(remoteConfig?.[remoteKey] || event.image);
+          const eventImage = getDirectLink(remoteConfig?.[remoteKey] || event.image, 800);
 
           return (
             <div key={idx} className="event-card-new" data-aos="fade-up" data-aos-delay={idx * 200}>
@@ -451,7 +452,12 @@ const BankInfo = () => (
 
 function App() {
   const [showRsvpIcon, setShowRsvpIcon] = useState(true);
-  const [remoteData, setRemoteData] = useState({ config: {}, gallery: config.gallery || [] });
+
+  // Khởi tạo state từ cache trong localStorage để hiện ảnh ngay lập tức khi load trang
+  const [remoteData, setRemoteData] = useState(() => {
+    const cached = localStorage.getItem('wedding_config_cache');
+    return cached ? JSON.parse(cached) : { config: {}, gallery: config.gallery || [] };
+  });
 
   useEffect(() => {
     const fetchRemoteData = async () => {
@@ -459,16 +465,19 @@ function App() {
         const response = await fetch(config.googleSheetUrl);
         const data = await response.json();
         if (data && typeof data === 'object' && data.config) {
-          // Convert all keys to lowercase for case-insensitive matching
           const lowerConfig = {};
           Object.keys(data.config).forEach(key => {
             lowerConfig[key.toLowerCase()] = data.config[key];
           });
 
-          setRemoteData({
+          const newRemoteData = {
             config: lowerConfig,
-            gallery: ((data.gallery && data.gallery.length > 0) ? data.gallery : config.gallery).map(url => getDirectLink(url))
-          });
+            gallery: (data.gallery && data.gallery.length > 0) ? data.gallery : config.gallery
+          };
+
+          setRemoteData(newRemoteData);
+          // Lưu vào cache cho lần sau
+          localStorage.setItem('wedding_config_cache', JSON.stringify(newRemoteData));
         }
       } catch (error) {
         console.error("Error fetching remote config:", error);

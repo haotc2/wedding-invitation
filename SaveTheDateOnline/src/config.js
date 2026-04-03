@@ -85,5 +85,5 @@ export const config = {
     }
   },
   // Link Google Apps Script để nhận dữ liệu đổ về Google Sheets
-  googleSheetUrl: "https://script.google.com/macros/s/AKfycbw0xLXGQOzOD_DMwI-EN1H97O1MeKnVoeZN-dCioglz6M7UvuTlgju_H43dkz0bbks/exec"
+  googleSheetUrl: "https://script.google.com/macros/s/AKfycbxIqpYcd6CJYSYvcTuWynbIpV1SXWjobDoKskMSTWoJrj2jaqIfWK474QdTWk_95KMY/exec"
 };
