@@ -47,20 +47,6 @@ export const config = {
     { time: "19:00", description: "Âm nhạc, khiêu vũ" },
     { time: "21:00", description: "Tung hoa và kết tiệc" },
   ],
-  loveStory: [
-    {
-      title: "Lần đầu gặp gỡ",
-      content: "Ngày ấy vu vơ đăng một dòng status trên facebook than thở, vu vơ đùa giỡn nói chuyện với một người xa lạ chưa từng quen.",
-    },
-    {
-      title: "Sự thấu hiểu",
-      content: "Mỗi chiều cuối tuần thường chạy xe vòng quanh qua những con phố, len lỏi trong từng dòng người tấp nập. Chúng ta từ 2 con người xa lạ mà bước vào cuộc đời nhau.",
-    },
-    {
-      title: "Chương mới",
-      content: "Và giờ đây chúng ta tiếp tục cùng nhau sang trang mới. Em và anh không chỉ là người yêu mà chúng ta còn là tri kỷ. Ngày hôm nay, em sẽ là cô dâu của anh.",
-    }
-  ],
   gallery: [
     "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=1200",
     "https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=600",

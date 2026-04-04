@@ -357,22 +357,6 @@ const Timeline = () => (
   </section>
 );
 
-const LoveStory = () => (
-  <section className="love-story">
-    <div className="container">
-      <h2 className="couple-title" data-aos="fade-up">Love Story</h2>
-      <div className="story-items">
-        {config.loveStory.map((story, idx) => (
-          <div key={idx} className="story-item card" data-aos="fade-up" data-aos-delay={idx * 150}>
-            <h3>{story.title}</h3>
-            <p>{story.content}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-);
-
 const RSVP = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -509,7 +493,6 @@ function App() {
       <Gallery remoteGallery={remoteData.gallery} />
       <Countdown remoteConfig={remoteData.config} />
       <Timeline />
-      <LoveStory />
       <RSVP />
       <BankInfo />
       <footer className="footer">
