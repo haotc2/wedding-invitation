@@ -156,7 +156,23 @@ const Couple = ({ remoteConfig }) => {
 
 const Gallery = ({ remoteGallery }) => {
   const [selectedIndex, setSelectedIndex] = useState(null);
-  const images = remoteGallery || [];
+  const images = (remoteGallery && remoteGallery.length > 0) ? remoteGallery : config.gallery;
+
+  const [displayCount, setDisplayCount] = useState(9); // Default 9
+
+  useEffect(() => {
+    const handleResize = () => {
+      // 3 cols on desktop (>=768) -> 9 images (3 rows x 3 cols)
+      // 2 cols on mobile (<768) -> 8 images (4 rows x 2 cols)
+      setDisplayCount(window.innerWidth < 768 ? 8 : 9);
+    };
+    handleResize(); // Initial check
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Display only part of images in the grid, but allow lightbox to view ALL
+  const displayImages = images.slice(0, displayCount);
 
   useEffect(() => {
     // Xử lý khóa cuộn chuột khi xem ảnh
@@ -182,7 +198,7 @@ const Gallery = ({ remoteGallery }) => {
       <div className="container">
         <h2 className="couple-title" data-aos="fade-up">ALBUM ẢNH</h2>
         <div className="gallery-grid">
-          {images.map((img, idx) => (
+          {displayImages.map((img, idx) => (
             <div
               key={idx}
               className="gallery-item"
@@ -311,7 +327,11 @@ const Countdown = ({ remoteConfig }) => {
   return (
     <section className="countdown-banner-section-new">
       <div className="container-wide">
-        <div className="countdown-banner-wrapper-new" data-aos="fade-up">
+        <div
+          className="countdown-banner-wrapper-new"
+          data-aos="fade-up"
+          style={{ backgroundImage: `url(${getDirectLink(remoteConfig?.countdownbackground || config.countdownBackground, 1600)})` }}
+        >
           <div className="countdown-content-new">
             <p className="countdown-subtitle-new">CÙNG ĐẾM NGƯỢC THỜI GIAN</p>
             <h2 className="countdown-title-new">Save The Date</h2>
