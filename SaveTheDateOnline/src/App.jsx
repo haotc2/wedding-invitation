@@ -877,7 +877,7 @@ function App() {
 
   return (
     <div className="App">
-      <MusicPlayer />
+      {/* <MusicPlayer /> */}
       <Hero remoteConfig={remoteData.config} />
       <Couple remoteConfig={remoteData.config} />
       <Gallery remoteGallery={remoteData.gallery} />
