@@ -4,5 +4,5 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: '/wedding-invitation/', // Tên repo trên GitHub
+  base: '/hao-nhi-wedding-invitation/', // Tên repo trên GitHub
 })

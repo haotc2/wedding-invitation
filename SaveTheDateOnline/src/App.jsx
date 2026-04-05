@@ -642,10 +642,10 @@ const Countdown = ({ remoteConfig }) => {
  */
 const Timeline = () => {
   const icons = [
-    "/wedding-invitation/gate-2.png",
-    "/wedding-invitation/nhan-cuoi-2.png",
-    "/wedding-invitation/ly-2.png",
-    "/wedding-invitation/hoa-cam-tay-2.png",
+    "/hao-nhi-wedding-invitation/gate-2.png",
+    "/hao-nhi-wedding-invitation/nhan-cuoi-2.png",
+    "/hao-nhi-wedding-invitation/ly-2.png",
+    "/hao-nhi-wedding-invitation/hoa-cam-tay-2.png",
   ];
 
   return (
