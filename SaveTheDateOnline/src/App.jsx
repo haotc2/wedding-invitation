@@ -62,7 +62,31 @@ const getDirectLink = (url, width = 1200) => {
 };
 
 const Hero = ({ remoteConfig }) => {
-  const mainEvent = config.events[1] || config.events[0];
+  const [showPhonePopup, setShowPhonePopup] = React.useState(false);
+
+  // Tìm sự kiện gần nhất (closest future event)
+  const mainEvent = React.useMemo(() => {
+    const now = new Date();
+    // Tạo danh sách các sự kiện kèm theo đối tượng Date
+    const eventsWithDates = config.events.map(ev => {
+      const [d, m] = ev.dayMonth.split('/');
+      // Giả định định dạng ngày là DD/MM và HH:mm
+      const eventDate = new Date(`${ev.year}-${m}-${d}T${ev.time}:00`);
+      return { ...ev, eventDate };
+    });
+
+    // Lọc các sự kiện chưa diễn ra
+    const futureEvents = eventsWithDates.filter(ev => ev.eventDate > now);
+
+    // Nếu có sự kiện tương lai, lấy cái gần nhất
+    if (futureEvents.length > 0) {
+      return futureEvents.sort((a, b) => a.eventDate - b.eventDate)[0];
+    }
+
+    // Nếu đã qua hết, lấy sự kiện cuối cùng
+    return config.events[config.events.length - 1];
+  }, []);
+
   const [day, month, year] = mainEvent.dayMonth.split('/').concat(mainEvent.year);
   const mainBackground = getDirectLink(remoteConfig?.mainbackground || config.mainBackground, 1600);
 
@@ -96,11 +120,35 @@ const Hero = ({ remoteConfig }) => {
         </div>
 
         <div className="hero-bottom-icons">
-          <button className="glass-icon-btn" onClick={() => window.open(`tel:${config.groom.phone}`)}>📞</button>
+          <button className="glass-icon-btn" onClick={() => setShowPhonePopup(true)}>📞</button>
           <button className="glass-icon-btn" onClick={() => window.scrollTo({ top: document.querySelector('.couple').offsetTop, behavior: 'smooth' })}>🏠</button>
           <button className="glass-icon-btn" onClick={() => window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mainEvent.address)}`)}>📍</button>
         </div>
       </div>
+
+      {showPhonePopup && (
+        <div className="lightbox-overlay popup-overlay" style={{ zIndex: 10000 }} onClick={() => setShowPhonePopup(false)}>
+          <div className="popup-content card" onClick={(e) => e.stopPropagation()}>
+            <button className="popup-close" onClick={() => setShowPhonePopup(false)}>✕</button>
+            <h3 className="couple-title" style={{ fontSize: '2rem' }}>LIÊN HỆ</h3>
+            <div className="phone-list">
+              <a href={`tel:${config.groom.phone}`} className="phone-item">
+                <div className="phone-info">
+                  <span className="phone-name">{config.groom.name}:</span>
+                </div>
+                <strong className="phone-number">{config.groom.phone}</strong>
+              </a>
+              <a href={`tel:${config.bride.phone}`} className="phone-item">
+                <div className="phone-info">
+                  <span className="phone-name full-name-text">{config.bride.name}:</span>
+                  <span className="phone-name short-name-text">Ph. Nhi:</span>
+                </div>
+                <strong className="phone-number">{config.bride.phone}</strong>
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };
@@ -126,12 +174,12 @@ const Couple = ({ remoteConfig }) => {
               <h3 className="card-name">{config.groom.name}</h3>
               <p className="card-date">{config.groom.birthDate}</p>
               <p className="card-bio">{config.groom.bio}</p>
-              <div className="card-socials">
+              {/* <div className="card-socials">
                 <button className="social-icon-btn">📞</button>
                 <button className="social-icon-btn">f</button>
                 <button className="social-icon-btn">𝕏</button>
                 <button className="social-icon-btn">📸</button>
-              </div>
+              </div> */}
             </div>
           </div>
           <div className="couple-card" data-aos="fade-left" style={{ backgroundImage: `url(${brideImage})` }}>
@@ -140,12 +188,12 @@ const Couple = ({ remoteConfig }) => {
               <h3 className="card-name">{config.bride.name}</h3>
               <p className="card-date">{config.bride.birthDate}</p>
               <p className="card-bio">{config.bride.bio}</p>
-              <div className="card-socials">
+              {/* <div className="card-socials">
                 <button className="social-icon-btn">📞</button>
                 <button className="social-icon-btn">f</button>
                 <button className="social-icon-btn">𝕏</button>
                 <button className="social-icon-btn">📸</button>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -243,14 +291,34 @@ const Events = ({ remoteConfig }) => {
               </div>
 
               <div className="event-info-new">
-                <h3 className="event-card-title">{event.title}</h3>
+                <h3 className="event-card-title">
+                  {event.title.includes('NHÀ') ? (
+                    <>
+                      {event.title.split('NHÀ')[0]}
+                      <span style={{ display: 'inline-block' }}>NHÀ {event.title.split('NHÀ')[1]}</span>
+                    </>
+                  ) : event.title}
+                </h3>
                 <p className="event-location-name-new">{event.location}</p>
-                <p className="event-address-new">{event.address}</p>
+                <p className="event-address-new">
+                  {(() => {
+                    const parts = event.address.split(',');
+                    const street = parts[0];
+                    const rest = parts.slice(1).join(',');
+                    return (
+                      <>
+                        <span className="address-street">{street.trim()}{parts.length > 1 ? ',' : ''}</span>{' '}
+                        <span className="address-location">{rest.trim()}</span>
+                      </>
+                    );
+                  })()}
+                </p>
                 <p className="event-time-new">Vào lúc <strong>{event.time}</strong></p>
 
                 <div className="event-date-row-new">
                   <div className="date-box-side">
-                    <span className="date-day-week">{event.dayOfWeek}</span>
+                    <span className="date-day-week full-day">{event.dayOfWeek}</span>
+                    <span className="date-day-week short-day">{event.dayOfWeek === 'Chủ Nhật' ? 'C. Nhật' : event.dayOfWeek}</span>
                   </div>
                   <div className="date-center-main">
                     <span className="date-day-large">{day}</span>
@@ -267,9 +335,6 @@ const Events = ({ remoteConfig }) => {
                 <div className="event-social-icons-new">
                   <button className="event-icon-circle" onClick={() => setShowPhonePopup(true)}>📞</button>
                   <button className="event-icon-circle" onClick={() => window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event.address)}`)}>📍</button>
-                  <button className="event-icon-circle">f</button>
-                  <button className="event-icon-circle">𝕏</button>
-                  <button className="event-icon-circle">📸</button>
                 </div>
               </div>
             </div>
@@ -286,15 +351,14 @@ const Events = ({ remoteConfig }) => {
             <div className="phone-list">
               <a href={`tel:${config.groom.phone}`} className="phone-item">
                 <div className="phone-info">
-                  <span className="phone-role">Gọi Chú rể</span>
-                  <span className="phone-name">{config.groom.name}</span>
+                  <span className="phone-name">{config.groom.name}:</span>
                 </div>
                 <strong className="phone-number">{config.groom.phone}</strong>
               </a>
               <a href={`tel:${config.bride.phone}`} className="phone-item">
                 <div className="phone-info">
-                  <span className="phone-role">Gọi Cô dâu</span>
-                  <span className="phone-name">{config.bride.name}</span>
+                  <span className="phone-name full-name-text">{config.bride.name}:</span>
+                  <span className="phone-name short-name-text">Ph.Nhi:</span>
                 </div>
                 <strong className="phone-number">{config.bride.phone}</strong>
               </a>
@@ -360,22 +424,37 @@ const Countdown = ({ remoteConfig }) => {
   );
 };
 
-const Timeline = () => (
-  <section className="timeline bg-white">
-    <div className="container">
-      <h2 data-aos="fade-up">Wedding Timeline</h2>
-      <div className="timeline-items">
-        {config.timeline.map((item, idx) => (
-          <div key={idx} className="timeline-item" data-aos="fade-up" data-aos-delay={idx * 100}>
-            <span className="time">{item.time}</span>
-            <span className="dot"></span>
-            <span className="desc">{item.description}</span>
-          </div>
-        ))}
+const Timeline = () => {
+  const icons = [
+    '/wedding-invitation/gate-2.png',
+    '/wedding-invitation/nhan-cuoi-2.png',
+    '/wedding-invitation/ly-2.png',
+    '/wedding-invitation/hoa-cam-tay-2.png'
+  ];
+
+  return (
+    <section className="timeline-new-section">
+      <div className="container">
+        <h2 className="timeline-title-new" data-aos="fade-up">Wedding Timeline</h2>
+        <div className="timeline-wrapper-new">
+          <div className="timeline-line-center"></div>
+          {config.timeline.map((item, idx) => (
+            <div key={idx} className="timeline-row-item" data-aos="fade-up" data-aos-delay={idx * 150}>
+              <div className="timeline-icon-left">
+                <img src={icons[idx % icons.length]} alt="" className="timeline-icon-img" />
+              </div>
+              <div className="timeline-dot-center"></div>
+              <div className="timeline-content-right">
+                <span className="timeline-time">{item.time}</span>
+                <span className="timeline-desc">{item.description}</span>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 const RSVP = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -434,9 +513,9 @@ const RSVP = () => {
 };
 
 const BankInfo = () => (
-  <section className="bank-info">
+  <section className="bank-info-section">
     <div className="container">
-      <h2 data-aos="fade-up">Gửi quà đến Cô dâu & Chú rể</h2>
+      <h2 data-aos="fade-up">Gửi quà đến <span style={{ display: 'inline-block' }}>Cô dâu & Chú rể</span></h2>
       <div className="bank-grid">
         <div className="bank-card card" data-aos="flip-left">
           <h3>Mừng cưới Chú rể</h3>
@@ -515,9 +594,12 @@ function App() {
       <Timeline />
       <RSVP />
       <BankInfo />
-      <footer className="footer">
-        <p className="couple-title" data-aos="fade-up">Thank You!</p>
-        <p data-aos="fade-up" data-aos-delay="200">Sự hiện diện của bạn sẽ khiến hôn lễ của chúng tôi trở nên ý nghĩa hơn bao giờ hết!</p>
+      <footer className="footer" style={{ backgroundImage: `url(${getDirectLink(remoteData.config?.footerbackground || config.footerBackground || remoteData.config?.mainbackground || config.mainBackground, 1600)})` }}>
+        <div className="footer-overlay"></div>
+        <div className="footer-content">
+          <p className="couple-title" data-aos="fade-up" style={{ color: 'white' }}>Thank You!</p>
+          <p data-aos="fade-up" data-aos-delay="200" style={{ color: 'rgba(255,255,255,0.9)' }}>Sự hiện diện của bạn sẽ khiến hôn lễ của chúng tôi trở nên ý nghĩa hơn bao giờ hết!</p>
+        </div>
       </footer>
       {showRsvpIcon && (
         <button className="floating-rsvp-btn" onClick={() => document.querySelector('.rsvp').scrollIntoView({ behavior: 'smooth' })}>

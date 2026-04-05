@@ -1,5 +1,6 @@
 export const config = {
   mainBackground: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1920", // Background for Hero section
+  footerBackground: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1920", // Background for Footer section fallback
   audioUrl: "/beautiful-in-white.mp3", // Background music
   groom: {
     name: "Chí Hào",
@@ -18,20 +19,20 @@ export const config = {
   weddingDate: "2026-11-29T18:00:00", // Using 2026 to keep countdown active
   events: [
     {
-      title: "THÀNH HÔN NHÀ GÁI",
-      location: "DIAMON PLAZA",
-      address: "171 Nguyễn Thái Sơn, Phường 7, Gò Vấp, TP.Hồ Chí Minh",
+      title: "LỄ CƯỚI NHÀ GÁI",
+      location: "GOLDEN LOTUS",
+      address: "105B Đ. Hà Huy Giáp, Trung Dũng, Trấn Biên, Đồng Nai",
       time: "10:45",
       dayOfWeek: "Chủ Nhật",
-      dayMonth: "29/11",
+      dayMonth: "22/11",
       year: "2026",
-      lunarDate: "21 tháng 10 năm Bình Ngọ",
+      lunarDate: "14 tháng 10 năm Bình Ngọ",
       image: "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=800", // Arch image
     },
     {
-      title: "THÀNH HÔN NHÀ TRAI",
-      location: "Queen Plaza",
-      address: "29B Trần Hưng Đạo, Phường 6, Quận 5, Hồ Chí Minh 70000, Việt Nam",
+      title: "LỄ CƯỚI NHÀ TRAI",
+      location: "QUEEN PLAZA",
+      address: "29B Trần Hưng Đạo, Phường An Đông, TP.Hồ Chí Minh",
       time: "18:00",
       dayOfWeek: "Chủ Nhật",
       dayMonth: "29/11",
@@ -44,7 +45,6 @@ export const config = {
     { time: "17:00", description: "Đón khách và chụp ảnh" },
     { time: "18:00", description: "Làm lễ" },
     { time: "18:30", description: "Khai tiệc" },
-    { time: "19:00", description: "Âm nhạc, khiêu vũ" },
     { time: "21:00", description: "Tung hoa và kết tiệc" },
   ],
   gallery: [
@@ -71,5 +71,5 @@ export const config = {
     }
   },
   // Link Google Apps Script để nhận dữ liệu đổ về Google Sheets
-  googleSheetUrl: "https://script.google.com/macros/s/AKfycbwwyohIxTks6Jjdm41J_5Is7kixdFaTIYvzc34NlUzqrtZBVVeXOb0e2Y_dbyDrEpH8/exec"
+  googleSheetUrl: "https://script.google.com/macros/s/AKfycbzQpQpb6IcfKsI14hj2aX2U_Gqv51lXctreDu125RwpWs2TVemwZgCRWbryxRTohltI/exec"
 };
