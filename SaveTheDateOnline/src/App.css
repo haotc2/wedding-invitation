@@ -30,19 +30,8 @@ body,
   height: 100%;
   object-fit: cover;
   object-position: center top;
-  /* Ưu tiên tối đa phần trên của ảnh */
   z-index: 0;
   animation: kenBurns 18s ease-in-out infinite alternate;
-}
-
-@keyframes kenBurns {
-  0% {
-    transform: scale(1);
-  }
-
-  100% {
-    transform: scale(1.12);
-  }
 }
 
 .hero-overlay {
@@ -137,7 +126,7 @@ body,
 
 .day-number {
   font-family: var(--font-heading);
-  font-size: 3.5rem;
+  font-size: 4rem;
   font-weight: 500;
 }
 
@@ -214,7 +203,6 @@ body,
   border-radius: 50%;
   border: none;
   background-color: #633f28;
-  /* Brown color matching the design */
   cursor: pointer;
   font-size: 1.2rem;
   display: flex;
@@ -256,28 +244,6 @@ body,
   animation: bounce 2s infinite;
 }
 
-@keyframes bounce {
-
-  0%,
-  100% {
-    transform: translateX(-50%) translateY(0);
-  }
-
-  50% {
-    transform: translateX(-50%) translateY(-10px);
-  }
-}
-
-@keyframes rotate {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 /* ==========================================
    EFFECTS: FALLING HEARTS
    ========================================== */
@@ -296,33 +262,8 @@ body,
   position: absolute;
   top: -50px;
   color: rgba(255, 182, 193, 0.7);
-  /* Light Pink with transparency */
   animation: fall-snow linear infinite;
   user-select: none;
-}
-
-@keyframes fall-snow {
-  0% {
-    top: -10%;
-    transform: translateX(0) rotate(0deg);
-  }
-
-  25% {
-    transform: translateX(25px) rotate(20deg);
-  }
-
-  50% {
-    transform: translateX(-25px) rotate(-20deg);
-  }
-
-  75% {
-    transform: translateX(25px) rotate(20deg);
-  }
-
-  100% {
-    top: 110%;
-    transform: translateX(0) rotate(0deg);
-  }
 }
 
 .date-banner {
@@ -463,8 +404,6 @@ body,
   border-color: white;
 }
 
-/* Removed old profile-img and person styles as they are replaced by cards */
-
 .container-wide {
   max-width: 1000px;
   margin: 0 auto;
@@ -479,7 +418,6 @@ body,
 .countdown-banner-wrapper-new {
   position: relative;
   height: 550px;
-  /* Increased from 450px to fit everything comfortably */
   background-size: cover;
   background-position: center;
   border-radius: 150px 150px 0 0;
@@ -488,9 +426,7 @@ body,
   align-items: center;
   justify-content: center;
   margin-bottom: -150px;
-  /* Overlap with event card */
   padding-bottom: 50px;
-  /* Added padding to push content UP from the overlap zone */
 }
 
 .countdown-banner-wrapper-new::before {
@@ -550,11 +486,9 @@ body,
 
 .countdown-box-new {
   background: rgba(255, 255, 255, 0.05);
-  /* more transparent */
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
   border: 1px solid rgba(255, 255, 255, 0.4);
-  /* clearer border */
   padding: 1.5rem;
   border-radius: 10px;
   min-width: 100px;
@@ -706,18 +640,6 @@ body,
   right: 20px;
 }
 
-@keyframes zoomIn {
-  from {
-    transform: scale(0.95);
-    opacity: 0;
-  }
-
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
 /* Events Styles */
 /* Event Card New Styles */
 .events-container-new {
@@ -731,13 +653,11 @@ body,
   background: #fcf9f7;
   width: 100%;
   max-width: 850px;
-  /* Wider frame as requested */
   padding: 3rem 2rem;
   border-radius: 20px;
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.05);
   text-align: center;
   border: 1px solid rgba(197, 160, 89, 0.2);
-  /* Subtle Gold border */
 }
 
 .event-arch-wrapper {
@@ -746,7 +666,6 @@ body,
   margin: 0 auto 2.5rem;
   overflow: hidden;
   border-radius: 140px 140px 0 0;
-  /* Arch shape */
 }
 
 .event-arch-img-new {
@@ -768,7 +687,6 @@ body,
   font-size: 1.5rem;
   letter-spacing: 2px;
   color: #6d071a;
-  /* Đồng bộ cùng tông màu chính */
   margin-bottom: 0.5rem;
   text-transform: uppercase;
   font-weight: 1000;
@@ -777,7 +695,6 @@ body,
 .event-address-new {
   font-size: 1rem;
   color: #7a6f68;
-  /* Sử dụng tông xám ấm sang trọng */
   margin-bottom: 1.2rem;
   max-width: 500px;
   margin-left: auto;
@@ -793,7 +710,6 @@ body,
 
 .event-time-new strong {
   color: #000000;
-  /* Điểm nhấn vào thời gian */
   font-size: 1.4rem;
 }
 
@@ -809,9 +725,8 @@ body,
 }
 
 .date-box-side {
-  border-top: 2px solid #c5a059;
-  /* Chuyển sang Vàng Champagne tinh tế */
-  border-bottom: 2px solid #c5a059;
+  border-top: 3px solid #c5a059;
+  border-bottom: 3px solid #c5a059;
   padding: 0.8rem 0;
   min-width: 100px;
   text-align: center;
@@ -819,7 +734,7 @@ body,
 
 .date-day-week,
 .date-year-small {
-  font-size: 1rem;
+  font-size: 1.2rem;
   color: #7a6f68;
   font-weight: 600;
   letter-spacing: 1px;
@@ -828,16 +743,6 @@ body,
 
 .short-day {
   display: none;
-}
-
-@media (max-width: 400px) {
-  .full-day {
-    display: none;
-  }
-
-  .short-day {
-    display: inline;
-  }
 }
 
 .date-center-main {
@@ -852,7 +757,6 @@ body,
   font-size: 5.5rem;
   font-weight: 700;
   color: #3d2b1f;
-  /* Chuyển sang tông nâu trầm */
   line-height: 0.8;
   letter-spacing: -3px;
   display: inline-block;
@@ -863,7 +767,6 @@ body,
   font-size: 4.8rem;
   font-weight: 400;
   color: rgba(197, 160, 89, 0.7);
-  /* Màu Vàng Champagne mờ nhưng đậm hơn */
   margin: 0 -0.5rem;
   line-height: 0.8;
   opacity: 0.8;
@@ -875,7 +778,6 @@ body,
   font-style: italic;
   font-size: 1rem;
   color: #7a6f68;
-  /* Dùng màu xám ấm tinh tế */
   margin-bottom: 2.5rem;
 }
 
@@ -995,24 +897,12 @@ body,
   display: none;
 }
 
-@media (max-width: 400px) {
-  .full-name-text {
-    display: none;
-  }
-
-  .short-name-text {
-    display: inline;
-  }
-}
-
 /* --- Wedding Timeline New Section --- */
 .timeline-new-section {
   background: #6d3e28;
   box-shadow: inset 9999px 9999px rgba(0, 0, 0, 0.519);
-  /* Dark Chocolate Brown */
   padding: 3rem 1rem;
   color: #f5eae1;
-  /* Light Cream Text */
   text-align: center;
 }
 
@@ -1038,7 +928,6 @@ body,
   left: 50%;
   width: 1px;
   background: rgba(245, 234, 225, 0.3);
-  /* Subtle line */
   transform: translateX(-50%);
 }
 
@@ -1102,38 +991,6 @@ body,
   font-style: italic;
 }
 
-/* Timeline Mobile */
-@media (max-width: 600px) {
-  .timeline-icon-left {
-    padding-right: 1rem;
-  }
-
-  .timeline-icon-img {
-    width: 35px;
-    height: 35px;
-  }
-
-  .timeline-content-right {
-    padding-left: 1.2rem;
-  }
-
-  .timeline-time {
-    font-size: 0.9rem;
-    white-space: nowrap;
-  }
-
-  .timeline-desc {
-    font-size: 0.75rem;
-    line-height: 1.2;
-  }
-
-  .timeline-title-new {
-    font-size: 1.8rem;
-    margin-bottom: 2.5rem;
-    letter-spacing: 1px;
-  }
-}
-
 .story-items {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -1168,9 +1025,7 @@ body,
 
 .bank-info-section {
   background: #4a0404;
-  /* Luxury Deep Red / Burgundy */
   background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3));
-  /* Subtle overlay for depth */
   padding: 5rem 1rem;
   color: #fcf9f7;
   text-align: center;
@@ -1194,7 +1049,6 @@ body,
 
 .bank-card.card {
   background: #fcf9f7;
-  /* Luxury Paper Cream */
   padding: 2.5rem 1.5rem;
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
@@ -1223,12 +1077,8 @@ body,
 .footer {
   position: relative;
   min-height: 480px;
-  /* Tăng nhẹ chiều cao để khoe ảnh đẹp hơn */
   background-size: cover;
   background-position: bottom;
-  /* Luôn bám sát mép trên của ảnh để thấy mặt */
-  /* background-attachment: fixed; */
-  /* Parallax effect */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1258,6 +1108,7 @@ body,
   margin-bottom: 1.5rem;
 }
 
+/* MEDIA */
 @media (max-width: 768px) {
   .script-name {
     font-size: 3.5rem;
@@ -1298,7 +1149,6 @@ body,
   /* Countdown Mobile Fixes */
   .countdown-banner-wrapper-new {
     height: 480px;
-    /* Needs to be slightly taller to fit everything */
     padding-bottom: 50px;
   }
 
@@ -1308,18 +1158,14 @@ body,
 
   .countdown-grid-new-banner {
     gap: 8px;
-    /* Correct gap */
     padding: 0 15px;
-    /* Prevent touching screen edges */
   }
 
   .countdown-box-new {
     min-width: unset;
     padding: 1rem 0.2rem;
-    /* Taller and narrower */
     flex: 1;
     border-radius: 8px;
-    /* Ensure rounded corners */
   }
 
   .countdown-box-new .value {
@@ -1358,30 +1204,29 @@ body,
 
   .event-date-row-new {
     gap: 0.2rem;
-    /* Tight gap */
   }
 
   .date-day-large {
-    font-size: 4rem;
-    letter-spacing: -2px;
+    font-size: 3.6rem;
+    letter-spacing: -3px;
   }
 
   .date-slash {
-    font-size: 3.5rem;
+    font-size: 3rem;
     margin: 0 -0.2rem;
   }
 
   .date-box-side {
-    min-width: 80px;
-    padding: 0.6rem 0;
+    min-width: 70px;
+    padding: 0.5rem 0;
     border-top: 2px solid #c5a059;
     border-bottom: 2px solid #c5a059;
   }
 
   .date-day-week,
   .date-year-small {
-    font-size: 0.9rem;
-    font-weight: 600;
+    font-size: 0.85rem;
+    font-weight: 500;
   }
 }
 
@@ -1413,7 +1258,7 @@ body,
   }
 
   .day-number {
-    font-size: 1.8rem;
+    font-size: 3rem;
   }
 
   .location-name {
@@ -1423,5 +1268,126 @@ body,
   .location-address {
     font-size: 0.75rem;
     line-height: 1.3;
+  }
+}
+
+@media (max-width: 400px) {
+  .full-day {
+    display: none;
+  }
+
+  .short-day {
+    display: inline;
+  }
+}
+
+@media (max-width: 400px) {
+  .full-name-text {
+    display: none;
+  }
+
+  .short-name-text {
+    display: inline;
+  }
+}
+
+/* Timeline Mobile */
+@media (max-width: 600px) {
+  .timeline-icon-left {
+    padding-right: 1rem;
+  }
+
+  .timeline-icon-img {
+    width: 35px;
+    height: 35px;
+  }
+
+  .timeline-content-right {
+    padding-left: 1.2rem;
+  }
+
+  .timeline-time {
+    font-size: 0.9rem;
+    white-space: nowrap;
+  }
+
+  .timeline-desc {
+    font-size: 0.75rem;
+    line-height: 1.2;
+  }
+
+  .timeline-title-new {
+    font-size: 1.8rem;
+    margin-bottom: 2.5rem;
+    letter-spacing: 1px;
+  }
+}
+
+/* KEYFRAMES */
+@keyframes zoomIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes kenBurns {
+  0% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(1.12);
+  }
+}
+
+@keyframes bounce {
+
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  50% {
+    transform: translateX(-50%) translateY(-10px);
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fall-snow {
+  0% {
+    top: -10%;
+    transform: translateX(0) rotate(0deg);
+  }
+
+  25% {
+    transform: translateX(25px) rotate(20deg);
+  }
+
+  50% {
+    transform: translateX(-25px) rotate(-20deg);
+  }
+
+  75% {
+    transform: translateX(25px) rotate(20deg);
+  }
+
+  100% {
+    top: 110%;
+    transform: translateX(0) rotate(0deg);
   }
 }
