@@ -91,9 +91,9 @@ const getDirectLink = (url, width = 1200) => {
     const idMatch = url.match(/[-\w]{25,}/);
     if (idMatch) {
       const id = idMatch[0];
-      // Sử dụng định dạng ổn định nhất: =s{size} (s là scale cho cả cao và rộng)
-      // Loại bỏ u/0/ để tương thích với tất cả tài khoản
-      return `https://lh3.googleusercontent.com/d/${id}=s${width}`;
+      // Sử dụng API chính thức của Google: drive.google.com/thumbnail
+      // Cách thức này chậm hơn lh3 một chút nhưng cực kỳ ổn định trên di động
+      return `https://drive.google.com/thumbnail?id=${id}&sz=w${width}`;
     }
   }
   return url;
