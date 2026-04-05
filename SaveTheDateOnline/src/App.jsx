@@ -28,7 +28,11 @@ const MusicPlayer = () => {
 
   return (
     <div className="music-player-new">
-      <audio ref={audioRef} src={config.audioUrl} loop />
+      <audio
+        ref={audioRef}
+        src={`${import.meta.env.BASE_URL}${config.audioUrl}`}
+        loop
+      />
       <button
         className={`music-toggle-new ${isPlaying ? "playing" : ""}`}
         onClick={togglePlay}
