@@ -87,15 +87,22 @@ const FallingHearts = () => {
 };
 
 const getDirectLink = (url, width = 1200) => {
-  if (url && typeof url === "string" && url.includes("drive.google.com")) {
-    const idMatch = url.match(/[-\w]{25,}/);
-    if (idMatch) {
-      const id = idMatch[0];
-      // Sử dụng API chính thức của Google: drive.google.com/thumbnail
-      // Cách thức này chậm hơn lh3 một chút nhưng cực kỳ ổn định trên di động
-      return `https://drive.google.com/thumbnail?id=${id}&sz=w${width}`;
-    }
+  if (!url || typeof url !== "string") return url;
+
+  // Nếu là ảnh từ Unsplash hoặc link web khác thì giữ nguyên
+  if (!url.includes("drive.google.com")) return url;
+
+  // Trích xuất ID từ link Drive một cách chính xác
+  const idMatch = url.match(/[-\w]{25,}/);
+  if (idMatch) {
+    const id = idMatch[0];
+    
+    // SỬ DỤNG POWER CDN: lh3.googleusercontent.com
+    // =s{size} : Điều chỉnh kích thước thông minh
+    // -rw      : Ép trả về định dạng WebP (SIÊU NHẸ và NÉT)
+    return `https://lh3.googleusercontent.com/d/${id}=s${width}-rw`;
   }
+
   return url;
 };
 
