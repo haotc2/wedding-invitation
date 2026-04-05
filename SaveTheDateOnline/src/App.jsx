@@ -12,16 +12,37 @@ import "./App.css";
  * ==========================================
  */
 const MusicPlayer = () => {
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true); // Default to on
   const audioRef = React.useRef(null);
+
+  useEffect(() => {
+    // Initial attempt to autoplay
+    const playAudio = () => {
+      audioRef.current
+        ?.play()
+        .then(() => setIsPlaying(true))
+        .catch(() => {
+          setIsPlaying(false);
+          // FALLBACK: Start on first user interaction anywhere
+          const startOnInteraction = () => {
+            audioRef.current?.play();
+            setIsPlaying(true);
+            document.removeEventListener("click", startOnInteraction);
+            document.removeEventListener("touchstart", startOnInteraction);
+          };
+          document.addEventListener("click", startOnInteraction);
+          document.addEventListener("touchstart", startOnInteraction);
+        });
+    };
+
+    playAudio();
+  }, []);
 
   const togglePlay = () => {
     if (isPlaying) {
       audioRef.current.pause();
     } else {
-      audioRef.current
-        .play()
-        .catch((err) => console.log("Audio play failed:", err));
+      audioRef.current.play();
     }
     setIsPlaying(!isPlaying);
   };
