@@ -246,14 +246,9 @@ const Couple = ({ remoteConfig }) => {
   return (
     <section className="couple bg-white">
       <div className="container">
-        <div
-          className="couple-header"
-          data-aos="fade-up"
-          style={{ position: "relative" }}
-        >
+        <div className="couple-header" data-aos="fade-up" style={{ position: "relative" }}>
           <p className="intro-text">GIỚI THIỆU</p>
           <h2 className="couple-title">CÔ DÂU VÀ CHÚ RỂ</h2>
-          <MusicPlayer />
         </div>
         <div className="couple-grid-new">
           <div
@@ -857,6 +852,7 @@ function App() {
 
   return (
     <div className="App">
+      <MusicPlayer />
       <Hero remoteConfig={remoteData.config} />
       <Couple remoteConfig={remoteData.config} />
       <Gallery remoteGallery={remoteData.gallery} />

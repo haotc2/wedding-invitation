@@ -202,11 +202,10 @@ body,
    WIDGETS: MUSIC PLAYER 
    ========================================== */
 .music-player-new {
-  position: absolute;
-  top: 50%;
-  right: 0;
-  transform: translateY(-50%);
-  z-index: 1000;
+  position: fixed;
+  top: 25px;
+  right: 20px;
+  z-index: 10000;
 }
 
 .music-toggle-new {

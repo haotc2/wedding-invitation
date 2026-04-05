@@ -3,7 +3,7 @@ export const config = {
     "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1920", // Background for Hero section
   footerBackground:
     "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1920", // Background for Footer section fallback
-  audioUrl: "/beautiful-in-white.mp3", // Background music
+  audioUrl: "/BeautifulInWhite.mp3", // Background music
   groom: {
     name: "Chí Hào",
     birthDate: "21/10/1995",
