@@ -86,13 +86,15 @@ const FallingHearts = () => {
   );
 };
 
-/* Hệ thống tự động chuyển đổi link Drive sang định dạng thumbnail (được nén và tối ưu nhất để tránh lỗi 429) */
 const getDirectLink = (url, width = 1200) => {
   if (url && typeof url === "string" && url.includes("drive.google.com")) {
-    const id = url.match(/[-\w]{25,}/);
-    // Sử dụng thumbnail API ổn định hơn và ít bị Google "phạt" 429 hơn so với lấy ảnh gốc trực tiếp
-    if (id)
-      return `https://drive.google.com/thumbnail?id=${id[0]}&sz=w${width}`;
+    const idMatch = url.match(/[-\w]{25,}/);
+    if (idMatch) {
+      const id = idMatch[0];
+      // Sử dụng định dạng ổn định nhất: =s{size} (s là scale cho cả cao và rộng)
+      // Loại bỏ u/0/ để tương thích với tất cả tài khoản
+      return `https://lh3.googleusercontent.com/d/${id}=s${width}`;
+    }
   }
   return url;
 };
