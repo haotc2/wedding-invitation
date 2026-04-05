@@ -1,20 +1,24 @@
 export const config = {
-  mainBackground: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1920", // Background for Hero section
-  footerBackground: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1920", // Background for Footer section fallback
+  mainBackground:
+    "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1920", // Background for Hero section
+  footerBackground:
+    "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1920", // Background for Footer section fallback
   audioUrl: "/beautiful-in-white.mp3", // Background music
   groom: {
     name: "Chí Hào",
     birthDate: "21/10/1995",
     phone: "0772004496",
     bio: "Chú rể là người cởi mở, thân thiện, giao tiếp tốt và thuộc tuýp người hướng ngoại.",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600",
+    image:
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600",
   },
   bride: {
     name: "Phương Nhi",
     birthDate: "31/08/1993",
     phone: "0976669860",
     bio: "Cô dâu thuộc tuýp người hướng nội. Sở thích nấu nướng và đi du lịch cùng gia đình.",
-    image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=600",
+    image:
+      "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=600",
   },
   weddingDate: "2026-11-29T18:00:00", // Using 2026 to keep countdown active
   events: [
@@ -27,7 +31,8 @@ export const config = {
       dayMonth: "22/11",
       year: "2026",
       lunarDate: "14 tháng 10 năm Bình Ngọ",
-      image: "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=800", // Arch image
+      image:
+        "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=800", // Arch image
     },
     {
       title: "LỄ CƯỚI NHÀ TRAI",
@@ -38,8 +43,9 @@ export const config = {
       dayMonth: "29/11",
       year: "2026",
       lunarDate: "21 tháng 10 năm Bình Ngọ",
-      image: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=800", // Arch image
-    }
+      image:
+        "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=800", // Arch image
+    },
   ],
   timeline: [
     { time: "17:00", description: "Đón khách và chụp ảnh" },
@@ -56,7 +62,7 @@ export const config = {
     "https://images.unsplash.com/photo-1520854221256-17451cc331bf?q=80&w=600",
     "https://images.unsplash.com/photo-1530103043960-ef38714abb15?q=80&w=600",
     "https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=600",
-    "https://images.unsplash.com/photo-1621600411688-4be93cd68504?q=80&w=600"
+    "https://images.unsplash.com/photo-1621600411688-4be93cd68504?q=80&w=600",
   ],
   bankInfo: {
     groom: {
@@ -68,8 +74,9 @@ export const config = {
       bank: "VIETCOMBANK",
       accountNumber: "0371000483268",
       accountName: "NGUYEN HUU PHUONG NHI",
-    }
+    },
   },
   // Link Google Apps Script để nhận dữ liệu đổ về Google Sheets
-  googleSheetUrl: "https://script.google.com/macros/s/AKfycbzQpQpb6IcfKsI14hj2aX2U_Gqv51lXctreDu125RwpWs2TVemwZgCRWbryxRTohltI/exec"
+  googleSheetUrl:
+    "https://script.google.com/macros/s/AKfycbzQpQpb6IcfKsI14hj2aX2U_Gqv51lXctreDu125RwpWs2TVemwZgCRWbryxRTohltI/exec",
 };

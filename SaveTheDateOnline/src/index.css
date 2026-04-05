@@ -1,15 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Inter:wght@100..900&family=Montserrat:wght@100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Inter:wght@100..900&family=Montserrat:wght@100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap");
 
 :root {
-  --primary-color: #F5EAE1;
-  --accent-color: #B5935A;
-  --text-main: #4A4036;
-  --text-muted: #7A6F66;
-  --bg-white: #FFFFFF;
-  --bg-soft: #FFF2F4;
-  --font-heading: 'Great Vibes', serif;
-  --font-script: 'Montserrat', cursive;
-  --font-body: 'Inter', sans-serif;
+  --primary-color: #f5eae1;
+  --accent-color: #b5935a;
+  --text-main: #4a4036;
+  --text-muted: #7a6f66;
+  --bg-white: #ffffff;
+  --bg-soft: #fff2f4;
+  --font-heading: "Great Vibes", serif;
+  --font-script: "Montserrat", cursive;
+  --font-body: "Inter", sans-serif;
   --spacing-lg: 4rem;
   --spacing-md: 2rem;
   --spacing-sm: 1rem;
@@ -39,7 +39,6 @@ h4 {
   letter-spacing: 2px;
 }
 
-
 section {
   padding: var(--spacing-lg) var(--spacing-sm);
   text-align: center;
@@ -51,7 +50,7 @@ section {
 }
 
 .btn-primary {
-  background-color: #6D071A;
+  background-color: #6d071a;
   color: white;
   padding: 0.8rem 2rem;
   border: none;

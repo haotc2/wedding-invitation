@@ -1,3 +1,6 @@
+/* ==========================================
+   GLOBAL STYLES & LAYOUT
+   ========================================== */
 html,
 body,
 .App {
@@ -6,6 +9,9 @@ body,
   width: 100%;
 }
 
+/* ==========================================
+   SECTION: HERO & INTRODUCTION
+   ========================================== */
 .hero {
   position: relative;
   min-height: 100vh;
@@ -23,6 +29,8 @@ body,
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center top;
+  /* Ưu tiên tối đa phần trên của ảnh */
   z-index: 0;
   animation: kenBurns 18s ease-in-out infinite alternate;
 }
@@ -190,7 +198,9 @@ body,
   color: #333;
 }
 
-/* Music Player New */
+/* ==========================================
+   WIDGETS: MUSIC PLAYER 
+   ========================================== */
 .music-player-new {
   position: absolute;
   top: 50%;
@@ -225,7 +235,9 @@ body,
   animation: rotate 5s linear infinite;
 }
 
-/* Floating RSVP Button */
+/* ==========================================
+   WIDGETS: FLOATING RSVP 
+   ========================================== */
 .floating-rsvp-btn {
   position: fixed;
   bottom: 30px;
@@ -267,7 +279,9 @@ body,
   }
 }
 
-/* Snowy Falling Hearts Effect */
+/* ==========================================
+   EFFECTS: FALLING HEARTS
+   ========================================== */
 .falling-hearts-container {
   position: absolute;
   top: 0;
@@ -312,8 +326,6 @@ body,
   }
 }
 
-
-
 .date-banner {
   font-size: 1.5rem;
   font-family: var(--font-heading);
@@ -323,6 +335,9 @@ body,
   padding: 0.5rem 2rem;
 }
 
+/* ==========================================
+   SECTION: COUPLE PROFILE
+   ========================================== */
 .couple-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -345,7 +360,7 @@ body,
 .couple-title {
   font-family: var(--font-heading);
   font-size: 2.8rem;
-  color: #6D071A;
+  color: #6d071a;
   text-transform: uppercase;
   letter-spacing: 2px;
   font-weight: 400;
@@ -383,7 +398,10 @@ body,
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(to top, rgba(82, 51, 33, 0.9) 0%, rgba(82, 51, 33, 0.4) 30%, transparent 60%);
+  background: linear-gradient(to top,
+      rgba(82, 51, 33, 0.9) 0%,
+      rgba(82, 51, 33, 0.4) 30%,
+      transparent 60%);
   z-index: 1;
 }
 
@@ -477,7 +495,7 @@ body,
 }
 
 .countdown-banner-wrapper-new::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -598,7 +616,7 @@ body,
 }
 
 .gallery-item::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -665,7 +683,9 @@ body,
   font-size: 2rem;
   cursor: pointer;
   z-index: 10001;
-  transition: background 0.3s, transform 0.2s;
+  transition:
+    background 0.3s,
+    transform 0.2s;
   border-radius: 50%;
   width: 50px;
   height: 50px;
@@ -709,7 +729,7 @@ body,
 }
 
 .event-card-new {
-  background: #FCF9F7;
+  background: #fcf9f7;
   width: 100%;
   max-width: 850px;
   /* Wider frame as requested */
@@ -739,7 +759,7 @@ body,
 .event-card-title {
   font-family: var(--font-heading);
   font-size: 2.2rem;
-  color: #6D071A;
+  color: #6d071a;
   text-transform: uppercase;
   margin-bottom: 1.5rem;
   letter-spacing: 2px;
@@ -748,7 +768,7 @@ body,
 .event-location-name-new {
   font-size: 1.5rem;
   letter-spacing: 2px;
-  color: #6D071A;
+  color: #6d071a;
   /* Đồng bộ cùng tông màu chính */
   margin-bottom: 0.5rem;
   text-transform: uppercase;
@@ -757,7 +777,7 @@ body,
 
 .event-address-new {
   font-size: 1rem;
-  color: #7A6F68;
+  color: #7a6f68;
   /* Sử dụng tông xám ấm sang trọng */
   margin-bottom: 1.2rem;
   max-width: 500px;
@@ -790,9 +810,9 @@ body,
 }
 
 .date-box-side {
-  border-top: 2px solid #C5A059;
+  border-top: 2px solid #c5a059;
   /* Chuyển sang Vàng Champagne tinh tế */
-  border-bottom: 2px solid #C5A059;
+  border-bottom: 2px solid #c5a059;
   padding: 0.8rem 0;
   min-width: 100px;
   text-align: center;
@@ -801,7 +821,7 @@ body,
 .date-day-week,
 .date-year-small {
   font-size: 1rem;
-  color: #7A6F68;
+  color: #7a6f68;
   font-weight: 600;
   letter-spacing: 1px;
   text-transform: uppercase;
@@ -855,7 +875,7 @@ body,
 .event-lunar-new {
   font-style: italic;
   font-size: 1rem;
-  color: #7A6F68;
+  color: #7a6f68;
   /* Dùng màu xám ấm tinh tế */
   margin-bottom: 2.5rem;
 }
@@ -1057,7 +1077,9 @@ body,
   border-radius: 50%;
   position: relative;
   z-index: 2;
-  box-shadow: 0 0 0 5px rgba(61, 43, 31, 1), 0 0 0 6px rgba(245, 234, 225, 0.4);
+  box-shadow:
+    0 0 0 5px rgba(61, 43, 31, 1),
+    0 0 0 6px rgba(245, 234, 225, 0.4);
 }
 
 .timeline-content-right {
@@ -1146,21 +1168,21 @@ body,
 }
 
 .bank-info-section {
-  background: #4A0404;
+  background: #4a0404;
   /* Luxury Deep Red / Burgundy */
   background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3));
   /* Subtle overlay for depth */
   padding: 5rem 1rem;
-  color: #FCF9F7;
+  color: #fcf9f7;
   text-align: center;
 }
 
 .bank-info-section h2 {
   font-family: var(--font-heading);
-  font-size: 2.5rem;
+  font-size: 2rem;
   margin-bottom: 3rem;
   letter-spacing: 2px;
-  color: #FCF9F7;
+  color: #fcf9f7;
 }
 
 .bank-grid {
@@ -1172,7 +1194,7 @@ body,
 }
 
 .bank-card.card {
-  background: #FCF9F7;
+  background: #fcf9f7;
   /* Luxury Paper Cream */
   padding: 2.5rem 1.5rem;
   border-radius: 12px;
@@ -1180,14 +1202,14 @@ body,
 }
 
 .bank-card h3 {
-  color: #6D071A;
+  color: #6d071a;
   font-size: 1.6rem;
   margin-bottom: 1rem;
   font-weight: 600;
 }
 
 .bank-card p {
-  color: #3D2B1F;
+  color: #3d2b1f;
   margin: 0.3rem 0;
   font-size: 0.95rem;
   font-weight: 500;
@@ -1196,15 +1218,18 @@ body,
 
 .bank-card p:last-of-type {
   font-weight: 700;
-  color: #6D071A;
+  color: #6d071a;
 }
 
 .footer {
   position: relative;
-  min-height: 400px;
+  min-height: 480px;
+  /* Tăng nhẹ chiều cao để khoe ảnh đẹp hơn */
   background-size: cover;
-  background-position: center;
-  background-attachment: fixed; /* Parallax effect */
+  background-position: bottom;
+  /* Luôn bám sát mép trên của ảnh để thấy mặt */
+  /* background-attachment: fixed; */
+  /* Parallax effect */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1350,8 +1375,8 @@ body,
   .date-box-side {
     min-width: 80px;
     padding: 0.6rem 0;
-    border-top: 2px solid #C5A059;
-    border-bottom: 2px solid #C5A059;
+    border-top: 2px solid #c5a059;
+    border-bottom: 2px solid #c5a059;
   }
 
   .date-day-week,

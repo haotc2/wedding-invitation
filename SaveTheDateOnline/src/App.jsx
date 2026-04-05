@@ -1,10 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-import { config } from './config';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import { config } from "./config";
+import "./App.css";
 
 // Components
+/**
+ * ==========================================
+ * COMPONENT: MusicPlayer
+ * Custom audio controls for the wedding theme
+ * ==========================================
+ */
 const MusicPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = React.useRef(null);
@@ -13,7 +19,9 @@ const MusicPlayer = () => {
     if (isPlaying) {
       audioRef.current.pause();
     } else {
-      audioRef.current.play().catch(err => console.log("Audio play failed:", err));
+      audioRef.current
+        .play()
+        .catch((err) => console.log("Audio play failed:", err));
     }
     setIsPlaying(!isPlaying);
   };
@@ -21,8 +29,11 @@ const MusicPlayer = () => {
   return (
     <div className="music-player-new">
       <audio ref={audioRef} src={config.audioUrl} loop />
-      <button className={`music-toggle-new ${isPlaying ? 'playing' : ''}`} onClick={togglePlay}>
-        {isPlaying ? '🎵' : '🔇'}
+      <button
+        className={`music-toggle-new ${isPlaying ? "playing" : ""}`}
+        onClick={togglePlay}
+      >
+        {isPlaying ? "🎵" : "🔇"}
       </button>
     </div>
   );
@@ -50,17 +61,23 @@ const FallingHearts = () => {
   );
 };
 
-
 /* Hệ thống tự động chuyển đổi link Drive sang định dạng thumbnail (được nén và tối ưu nhất để tránh lỗi 429) */
 const getDirectLink = (url, width = 1200) => {
-  if (url && typeof url === 'string' && url.includes('drive.google.com')) {
+  if (url && typeof url === "string" && url.includes("drive.google.com")) {
     const id = url.match(/[-\w]{25,}/);
     // Sử dụng thumbnail API ổn định hơn và ít bị Google "phạt" 429 hơn so với lấy ảnh gốc trực tiếp
-    if (id) return `https://drive.google.com/thumbnail?id=${id[0]}&sz=w${width}`;
+    if (id)
+      return `https://drive.google.com/thumbnail?id=${id[0]}&sz=w${width}`;
   }
   return url;
 };
 
+/**
+ * ==========================================
+ * COMPONENT: Hero
+ * Top section displaying the main aesthetic and countdown
+ * ==========================================
+ */
 const Hero = ({ remoteConfig }) => {
   const [showPhonePopup, setShowPhonePopup] = React.useState(false);
 
@@ -68,15 +85,15 @@ const Hero = ({ remoteConfig }) => {
   const mainEvent = React.useMemo(() => {
     const now = new Date();
     // Tạo danh sách các sự kiện kèm theo đối tượng Date
-    const eventsWithDates = config.events.map(ev => {
-      const [d, m] = ev.dayMonth.split('/');
+    const eventsWithDates = config.events.map((ev) => {
+      const [d, m] = ev.dayMonth.split("/");
       // Giả định định dạng ngày là DD/MM và HH:mm
       const eventDate = new Date(`${ev.year}-${m}-${d}T${ev.time}:00`);
       return { ...ev, eventDate };
     });
 
     // Lọc các sự kiện chưa diễn ra
-    const futureEvents = eventsWithDates.filter(ev => ev.eventDate > now);
+    const futureEvents = eventsWithDates.filter((ev) => ev.eventDate > now);
 
     // Nếu có sự kiện tương lai, lấy cái gần nhất
     if (futureEvents.length > 0) {
@@ -87,15 +104,24 @@ const Hero = ({ remoteConfig }) => {
     return config.events[config.events.length - 1];
   }, []);
 
-  const [day, month, year] = mainEvent.dayMonth.split('/').concat(mainEvent.year);
-  const mainBackground = getDirectLink(remoteConfig?.mainbackground || config.mainBackground, 1600);
+  const [day, month, year] = mainEvent.dayMonth
+    .split("/")
+    .concat(mainEvent.year);
+  const mainBackground = getDirectLink(
+    remoteConfig?.mainbackground || config.mainBackground,
+    1600,
+  );
 
   return (
     <section className="hero">
       <img src={mainBackground} alt="" className="hero-bg-img" />
       <div className="hero-overlay"></div>
       <FallingHearts />
-      <div className="hero-glass-container" data-aos="zoom-in" data-aos-duration="1500">
+      <div
+        className="hero-glass-container"
+        data-aos="zoom-in"
+        data-aos-duration="1500"
+      >
         <p className="hero-script-subtitle">Save The Date</p>
 
         <div className="hero-names-new">
@@ -105,12 +131,18 @@ const Hero = ({ remoteConfig }) => {
         </div>
 
         <div className="hero-date-block">
-          <div className="date-item side">{mainEvent.dayOfWeek.toUpperCase()}</div>
+          <div className="date-item side">
+            {mainEvent.dayOfWeek.toUpperCase()}
+          </div>
           <div className="date-item center">
-            <span className="day-number">{day}.{month}</span>
+            <span className="day-number">
+              {day}.{month}
+            </span>
             <span className="month-year">{year}</span>
           </div>
-          <div className="date-item side">{mainEvent.time.replace(':', 'H')}</div>
+          <div className="date-item side">
+            {mainEvent.time.replace(":", "H")}
+          </div>
         </div>
 
         <div className="hero-location-block">
@@ -120,17 +152,55 @@ const Hero = ({ remoteConfig }) => {
         </div>
 
         <div className="hero-bottom-icons">
-          <button className="glass-icon-btn" onClick={() => setShowPhonePopup(true)}>📞</button>
-          <button className="glass-icon-btn" onClick={() => window.scrollTo({ top: document.querySelector('.couple').offsetTop, behavior: 'smooth' })}>🏠</button>
-          <button className="glass-icon-btn" onClick={() => window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mainEvent.address)}`)}>📍</button>
+          <button
+            className="glass-icon-btn"
+            onClick={() => setShowPhonePopup(true)}
+          >
+            📞
+          </button>
+          <button
+            className="glass-icon-btn"
+            onClick={() =>
+              window.scrollTo({
+                top: document.querySelector(".couple").offsetTop,
+                behavior: "smooth",
+              })
+            }
+          >
+            🏠
+          </button>
+          <button
+            className="glass-icon-btn"
+            onClick={() =>
+              window.open(
+                `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mainEvent.address)}`,
+              )
+            }
+          >
+            📍
+          </button>
         </div>
       </div>
 
       {showPhonePopup && (
-        <div className="lightbox-overlay popup-overlay" style={{ zIndex: 10000 }} onClick={() => setShowPhonePopup(false)}>
-          <div className="popup-content card" onClick={(e) => e.stopPropagation()}>
-            <button className="popup-close" onClick={() => setShowPhonePopup(false)}>✕</button>
-            <h3 className="couple-title" style={{ fontSize: '2rem' }}>LIÊN HỆ</h3>
+        <div
+          className="lightbox-overlay popup-overlay"
+          style={{ zIndex: 10000 }}
+          onClick={() => setShowPhonePopup(false)}
+        >
+          <div
+            className="popup-content card"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              className="popup-close"
+              onClick={() => setShowPhonePopup(false)}
+            >
+              ✕
+            </button>
+            <h3 className="couple-title" style={{ fontSize: "2rem" }}>
+              LIÊN HỆ
+            </h3>
             <div className="phone-list">
               <a href={`tel:${config.groom.phone}`} className="phone-item">
                 <div className="phone-info">
@@ -140,7 +210,9 @@ const Hero = ({ remoteConfig }) => {
               </a>
               <a href={`tel:${config.bride.phone}`} className="phone-item">
                 <div className="phone-info">
-                  <span className="phone-name full-name-text">{config.bride.name}:</span>
+                  <span className="phone-name full-name-text">
+                    {config.bride.name}:
+                  </span>
                   <span className="phone-name short-name-text">Ph. Nhi:</span>
                 </div>
                 <strong className="phone-number">{config.bride.phone}</strong>
@@ -155,20 +227,40 @@ const Hero = ({ remoteConfig }) => {
 
 // Countdown moved below Events
 
+/**
+ * ==========================================
+ * COMPONENT: Couple
+ * Introduction block for Bride and Groom
+ * ==========================================
+ */
 const Couple = ({ remoteConfig }) => {
-  const groomImage = getDirectLink(remoteConfig?.groomimage || config.groom.image, 800);
-  const brideImage = getDirectLink(remoteConfig?.brideimage || config.bride.image, 800);
+  const groomImage = getDirectLink(
+    remoteConfig?.groomimage || config.groom.image,
+    800,
+  );
+  const brideImage = getDirectLink(
+    remoteConfig?.brideimage || config.bride.image,
+    800,
+  );
 
   return (
     <section className="couple bg-white">
       <div className="container">
-        <div className="couple-header" data-aos="fade-up" style={{ position: 'relative' }}>
+        <div
+          className="couple-header"
+          data-aos="fade-up"
+          style={{ position: "relative" }}
+        >
           <p className="intro-text">GIỚI THIỆU</p>
           <h2 className="couple-title">CÔ DÂU VÀ CHÚ RỂ</h2>
           <MusicPlayer />
         </div>
         <div className="couple-grid-new">
-          <div className="couple-card" data-aos="fade-right" style={{ backgroundImage: `url(${groomImage})` }}>
+          <div
+            className="couple-card"
+            data-aos="fade-right"
+            style={{ backgroundImage: `url(${groomImage})` }}
+          >
             <div className="card-overlay-gradient"></div>
             <div className="card-content">
               <h3 className="card-name">{config.groom.name}</h3>
@@ -182,7 +274,11 @@ const Couple = ({ remoteConfig }) => {
               </div> */}
             </div>
           </div>
-          <div className="couple-card" data-aos="fade-left" style={{ backgroundImage: `url(${brideImage})` }}>
+          <div
+            className="couple-card"
+            data-aos="fade-left"
+            style={{ backgroundImage: `url(${brideImage})` }}
+          >
             <div className="card-overlay-gradient"></div>
             <div className="card-content">
               <h3 className="card-name">{config.bride.name}</h3>
@@ -202,9 +298,16 @@ const Couple = ({ remoteConfig }) => {
   );
 };
 
+/**
+ * ==========================================
+ * COMPONENT: Gallery
+ * Previews the pre-wedding photo album
+ * ==========================================
+ */
 const Gallery = ({ remoteGallery }) => {
   const [selectedIndex, setSelectedIndex] = useState(null);
-  const images = (remoteGallery && remoteGallery.length > 0) ? remoteGallery : config.gallery;
+  const images =
+    remoteGallery && remoteGallery.length > 0 ? remoteGallery : config.gallery;
 
   const [displayCount, setDisplayCount] = useState(9); // Default 9
 
@@ -215,8 +318,8 @@ const Gallery = ({ remoteGallery }) => {
       setDisplayCount(window.innerWidth < 768 ? 8 : 9);
     };
     handleResize(); // Initial check
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   // Display only part of images in the grid, but allow lightbox to view ALL
@@ -225,9 +328,9 @@ const Gallery = ({ remoteGallery }) => {
   useEffect(() => {
     // Xử lý khóa cuộn chuột khi xem ảnh
     if (selectedIndex !== null) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     }
   }, [selectedIndex]);
 
@@ -244,7 +347,9 @@ const Gallery = ({ remoteGallery }) => {
   return (
     <section className="gallery bg-white">
       <div className="container">
-        <h2 className="couple-title" data-aos="fade-up">ALBUM ẢNH</h2>
+        <h2 className="couple-title" data-aos="fade-up">
+          ALBUM ẢNH
+        </h2>
         <div className="gallery-grid">
           {displayImages.map((img, idx) => (
             <div
@@ -254,7 +359,11 @@ const Gallery = ({ remoteGallery }) => {
               data-aos-delay={idx * 50}
               onClick={() => setSelectedIndex(idx)}
             >
-              <img src={getDirectLink(img, 400)} alt={`Gallery ${idx}`} loading="lazy" />
+              <img
+                src={getDirectLink(img, 400)}
+                alt={`Gallery ${idx}`}
+                loading="lazy"
+              />
             </div>
           ))}
         </div>
@@ -262,17 +371,40 @@ const Gallery = ({ remoteGallery }) => {
 
       {/* Lightbox Modal */}
       {selectedIndex !== null && (
-        <div className="lightbox-overlay" onClick={() => setSelectedIndex(null)}>
-          <button className="lightbox-close" onClick={() => setSelectedIndex(null)}>✕</button>
-          <button className="lightbox-nav prev" onClick={handlePrev}>&#10094;</button>
-          <img src={images[selectedIndex]} alt="Enlarged" className="lightbox-img" onClick={(e) => e.stopPropagation()} />
-          <button className="lightbox-nav next" onClick={handleNext}>&#10095;</button>
+        <div
+          className="lightbox-overlay"
+          onClick={() => setSelectedIndex(null)}
+        >
+          <button
+            className="lightbox-close"
+            onClick={() => setSelectedIndex(null)}
+          >
+            ✕
+          </button>
+          <button className="lightbox-nav prev" onClick={handlePrev}>
+            &#10094;
+          </button>
+          <img
+            src={images[selectedIndex]}
+            alt="Enlarged"
+            className="lightbox-img"
+            onClick={(e) => e.stopPropagation()}
+          />
+          <button className="lightbox-nav next" onClick={handleNext}>
+            &#10095;
+          </button>
         </div>
       )}
     </section>
   );
 };
 
+/**
+ * ==========================================
+ * COMPONENT: Events
+ * Detail cards for wedding parties and ceremonies
+ * ==========================================
+ */
 const Events = ({ remoteConfig }) => {
   const [showPhonePopup, setShowPhonePopup] = useState(false);
 
@@ -280,45 +412,72 @@ const Events = ({ remoteConfig }) => {
     <>
       <div className="events-container-new">
         {config.events.map((event, idx) => {
-          const [day, month] = event.dayMonth.split('/');
+          const [day, month] = event.dayMonth.split("/");
           const remoteKey = `event${idx + 1}image`;
-          const eventImage = getDirectLink(remoteConfig?.[remoteKey] || event.image, 800);
+          const eventImage = getDirectLink(
+            remoteConfig?.[remoteKey] || event.image,
+            800,
+          );
 
           return (
-            <div key={idx} className="event-card-new" data-aos="fade-up" data-aos-delay={idx * 200}>
+            <div
+              key={idx}
+              className="event-card-new"
+              data-aos="fade-up"
+              data-aos-delay={idx * 200}
+            >
               <div className="event-arch-wrapper">
-                <img src={eventImage} alt={event.title} className="event-arch-img-new" />
+                <img
+                  src={eventImage}
+                  alt={event.title}
+                  className="event-arch-img-new"
+                />
               </div>
 
               <div className="event-info-new">
                 <h3 className="event-card-title">
-                  {event.title.includes('NHÀ') ? (
+                  {event.title.includes("NHÀ") ? (
                     <>
-                      {event.title.split('NHÀ')[0]}
-                      <span style={{ display: 'inline-block' }}>NHÀ {event.title.split('NHÀ')[1]}</span>
+                      {event.title.split("NHÀ")[0]}
+                      <span style={{ display: "inline-block" }}>
+                        NHÀ {event.title.split("NHÀ")[1]}
+                      </span>
                     </>
-                  ) : event.title}
+                  ) : (
+                    event.title
+                  )}
                 </h3>
                 <p className="event-location-name-new">{event.location}</p>
                 <p className="event-address-new">
                   {(() => {
-                    const parts = event.address.split(',');
+                    const parts = event.address.split(",");
                     const street = parts[0];
-                    const rest = parts.slice(1).join(',');
+                    const rest = parts.slice(1).join(",");
                     return (
                       <>
-                        <span className="address-street">{street.trim()}{parts.length > 1 ? ',' : ''}</span>{' '}
+                        <span className="address-street">
+                          {street.trim()}
+                          {parts.length > 1 ? "," : ""}
+                        </span>{" "}
                         <span className="address-location">{rest.trim()}</span>
                       </>
                     );
                   })()}
                 </p>
-                <p className="event-time-new">Vào lúc <strong>{event.time}</strong></p>
+                <p className="event-time-new">
+                  Vào lúc <strong>{event.time}</strong>
+                </p>
 
                 <div className="event-date-row-new">
                   <div className="date-box-side">
-                    <span className="date-day-week full-day">{event.dayOfWeek}</span>
-                    <span className="date-day-week short-day">{event.dayOfWeek === 'Chủ Nhật' ? 'C. Nhật' : event.dayOfWeek}</span>
+                    <span className="date-day-week full-day">
+                      {event.dayOfWeek}
+                    </span>
+                    <span className="date-day-week short-day">
+                      {event.dayOfWeek === "Chủ Nhật"
+                        ? "C. Nhật"
+                        : event.dayOfWeek}
+                    </span>
                   </div>
                   <div className="date-center-main">
                     <span className="date-day-large">{day}</span>
@@ -333,8 +492,22 @@ const Events = ({ remoteConfig }) => {
                 <p className="event-lunar-new">Nhằm ngày {event.lunarDate}</p>
 
                 <div className="event-social-icons-new">
-                  <button className="event-icon-circle" onClick={() => setShowPhonePopup(true)}>📞</button>
-                  <button className="event-icon-circle" onClick={() => window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event.address)}`)}>📍</button>
+                  <button
+                    className="event-icon-circle"
+                    onClick={() => setShowPhonePopup(true)}
+                  >
+                    📞
+                  </button>
+                  <button
+                    className="event-icon-circle"
+                    onClick={() =>
+                      window.open(
+                        `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event.address)}`,
+                      )
+                    }
+                  >
+                    📍
+                  </button>
                 </div>
               </div>
             </div>
@@ -344,9 +517,21 @@ const Events = ({ remoteConfig }) => {
 
       {/* Phone Popup Modal */}
       {showPhonePopup && (
-        <div className="lightbox-overlay popup-overlay" onClick={() => setShowPhonePopup(false)}>
-          <div className="popup-content card" onClick={(e) => e.stopPropagation()} data-aos="zoom-in">
-            <button className="popup-close" onClick={() => setShowPhonePopup(false)}>✕</button>
+        <div
+          className="lightbox-overlay popup-overlay"
+          onClick={() => setShowPhonePopup(false)}
+        >
+          <div
+            className="popup-content card"
+            onClick={(e) => e.stopPropagation()}
+            data-aos="zoom-in"
+          >
+            <button
+              className="popup-close"
+              onClick={() => setShowPhonePopup(false)}
+            >
+              ✕
+            </button>
             <h3 className="couple-title">Liên hệ</h3>
             <div className="phone-list">
               <a href={`tel:${config.groom.phone}`} className="phone-item">
@@ -357,7 +542,9 @@ const Events = ({ remoteConfig }) => {
               </a>
               <a href={`tel:${config.bride.phone}`} className="phone-item">
                 <div className="phone-info">
-                  <span className="phone-name full-name-text">{config.bride.name}:</span>
+                  <span className="phone-name full-name-text">
+                    {config.bride.name}:
+                  </span>
                   <span className="phone-name short-name-text">Ph.Nhi:</span>
                 </div>
                 <strong className="phone-number">{config.bride.phone}</strong>
@@ -370,6 +557,12 @@ const Events = ({ remoteConfig }) => {
   );
 };
 
+/**
+ * ==========================================
+ * COMPONENT: Countdown
+ * Displays time remaining until the core event
+ * ==========================================
+ */
 const Countdown = ({ remoteConfig }) => {
   const [timeLeft, setTimeLeft] = useState({});
 
@@ -394,20 +587,37 @@ const Countdown = ({ remoteConfig }) => {
         <div
           className="countdown-banner-wrapper-new"
           data-aos="fade-up"
-          style={{ backgroundImage: `url(${getDirectLink(remoteConfig?.countdownbackground || config.countdownBackground, 1600)})` }}
+          style={{
+            backgroundImage: `url(${getDirectLink(remoteConfig?.countdownbackground || config.countdownBackground, 1600)})`,
+          }}
         >
           <div className="countdown-content-new">
             <p className="countdown-subtitle-new">CÙNG ĐẾM NGƯỢC THỜI GIAN</p>
             <h2 className="countdown-title-new">Save The Date</h2>
 
-
             <div className="countdown-grid-new-banner">
-              {['days', 'hours', 'minutes', 'seconds'].map((unit, index) => {
+              {["days", "hours", "minutes", "seconds"].map((unit, index) => {
                 const value = timeLeft[unit];
-                const label = unit === 'days' ? 'Ngày' : unit === 'hours' ? 'Giờ' : unit === 'minutes' ? 'Phút' : 'Giây';
+                const label =
+                  unit === "days"
+                    ? "Ngày"
+                    : unit === "hours"
+                      ? "Giờ"
+                      : unit === "minutes"
+                        ? "Phút"
+                        : "Giây";
                 return (
-                  <div key={unit} className="countdown-box-new" data-aos="zoom-in" data-aos-delay={index * 100}>
-                    <span className="value">{value !== undefined && !isNaN(value) ? String(value).padStart(2, '0') : '00'}</span>
+                  <div
+                    key={unit}
+                    className="countdown-box-new"
+                    data-aos="zoom-in"
+                    data-aos-delay={index * 100}
+                  >
+                    <span className="value">
+                      {value !== undefined && !isNaN(value)
+                        ? String(value).padStart(2, "0")
+                        : "00"}
+                    </span>
                     <span className="unit">{label}</span>
                   </div>
                 );
@@ -424,24 +634,41 @@ const Countdown = ({ remoteConfig }) => {
   );
 };
 
+/**
+ * ==========================================
+ * COMPONENT: Timeline
+ * Represents the schedule for the wedding day
+ * ==========================================
+ */
 const Timeline = () => {
   const icons = [
-    '/wedding-invitation/gate-2.png',
-    '/wedding-invitation/nhan-cuoi-2.png',
-    '/wedding-invitation/ly-2.png',
-    '/wedding-invitation/hoa-cam-tay-2.png'
+    "/wedding-invitation/gate-2.png",
+    "/wedding-invitation/nhan-cuoi-2.png",
+    "/wedding-invitation/ly-2.png",
+    "/wedding-invitation/hoa-cam-tay-2.png",
   ];
 
   return (
     <section className="timeline-new-section">
       <div className="container">
-        <h2 className="timeline-title-new" data-aos="fade-up">Wedding Timeline</h2>
+        <h2 className="timeline-title-new" data-aos="fade-up">
+          Wedding Timeline
+        </h2>
         <div className="timeline-wrapper-new">
           <div className="timeline-line-center"></div>
           {config.timeline.map((item, idx) => (
-            <div key={idx} className="timeline-row-item" data-aos="fade-up" data-aos-delay={idx * 150}>
+            <div
+              key={idx}
+              className="timeline-row-item"
+              data-aos="fade-up"
+              data-aos-delay={idx * 150}
+            >
               <div className="timeline-icon-left">
-                <img src={icons[idx % icons.length]} alt="" className="timeline-icon-img" />
+                <img
+                  src={icons[idx % icons.length]}
+                  alt=""
+                  className="timeline-icon-img"
+                />
               </div>
               <div className="timeline-dot-center"></div>
               <div className="timeline-content-right">
@@ -456,13 +683,24 @@ const Timeline = () => {
   );
 };
 
+/**
+ * ==========================================
+ * COMPONENT: RSVP
+ * Form handling guest attendance submissions
+ * ==========================================
+ */
 const RSVP = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!config.googleSheetUrl || config.googleSheetUrl === "YOUR_GOOGLE_SHEET_URL") {
-      alert("Bạn chưa cấu hình Google Sheets URL. Vui lòng xem hướng dẫn để lấy link!");
+    if (
+      !config.googleSheetUrl ||
+      config.googleSheetUrl === "YOUR_GOOGLE_SHEET_URL"
+    ) {
+      alert(
+        "Bạn chưa cấu hình Google Sheets URL. Vui lòng xem hướng dẫn để lấy link!",
+      );
       return;
     }
 
@@ -477,7 +715,7 @@ const RSVP = () => {
       await fetch(config.googleSheetUrl, {
         method: "POST",
         mode: "no-cors",
-        body: params
+        body: params,
       });
 
       alert("Cảm ơn bạn đã báo danh! Dữ liệu đã được ghi nhận.");
@@ -493,7 +731,11 @@ const RSVP = () => {
       <div className="container" data-aos="fade-up">
         <h2>Xác nhận tham dự</h2>
         <p>Hãy cho chúng tôi biết bạn sẽ đến tham dự nhé!</p>
-        <form className="rsvp-form card" data-aos="zoom-in" onSubmit={handleSubmit}>
+        <form
+          className="rsvp-form card"
+          data-aos="zoom-in"
+          onSubmit={handleSubmit}
+        >
           <input type="text" name="name" placeholder="Họ và tên" required />
           <select name="count" required>
             <option value="">Số người tham dự</option>
@@ -502,9 +744,13 @@ const RSVP = () => {
             <option value="3">3 người</option>
             <option value="4+">4+ người</option>
           </select>
-          <textarea name="message" placeholder="Lời nhắn gửi..." rows="4"></textarea>
+          <textarea
+            name="message"
+            placeholder="Lời nhắn gửi..."
+            rows="4"
+          ></textarea>
           <button type="submit" className="btn-primary" disabled={isSubmitting}>
-            {isSubmitting ? 'Đang gửi...' : 'Gửi lời chúc'}
+            {isSubmitting ? "Đang gửi..." : "Gửi lời chúc"}
           </button>
         </form>
       </div>
@@ -512,10 +758,19 @@ const RSVP = () => {
   );
 };
 
+/**
+ * ==========================================
+ * COMPONENT: BankInfo
+ * Direct banking information for gifting
+ * ==========================================
+ */
 const BankInfo = () => (
   <section className="bank-info-section">
     <div className="container">
-      <h2 data-aos="fade-up">Gửi quà đến <span style={{ display: 'inline-block' }}>Cô dâu & Chú rể</span></h2>
+      <h2 data-aos="fade-up">
+        Gửi quà đến{" "}
+        <span style={{ display: "inline-block" }}>Cô dâu & Chú rể</span>
+      </h2>
       <div className="bank-grid">
         <div className="bank-card card" data-aos="flip-left">
           <h3>Mừng cưới Chú rể</h3>
@@ -534,13 +789,21 @@ const BankInfo = () => (
   </section>
 );
 
+/**
+ * ==========================================
+ * MAIN APP CONTAINER (Root)
+ * Connects all sections and manages global state 
+ * ==========================================
+ */
 function App() {
   const [showRsvpIcon, setShowRsvpIcon] = useState(true);
 
   // Khởi tạo state từ cache trong localStorage để hiện ảnh ngay lập tức khi load trang
   const [remoteData, setRemoteData] = useState(() => {
-    const cached = localStorage.getItem('wedding_config_cache');
-    return cached ? JSON.parse(cached) : { config: {}, gallery: config.gallery || [] };
+    const cached = localStorage.getItem("wedding_config_cache");
+    return cached
+      ? JSON.parse(cached)
+      : { config: {}, gallery: config.gallery || [] };
   });
 
   useEffect(() => {
@@ -548,20 +811,26 @@ function App() {
       try {
         const response = await fetch(config.googleSheetUrl);
         const data = await response.json();
-        if (data && typeof data === 'object' && data.config) {
+        if (data && typeof data === "object" && data.config) {
           const lowerConfig = {};
-          Object.keys(data.config).forEach(key => {
+          Object.keys(data.config).forEach((key) => {
             lowerConfig[key.toLowerCase()] = data.config[key];
           });
 
           const newRemoteData = {
             config: lowerConfig,
-            gallery: (data.gallery && data.gallery.length > 0) ? data.gallery : config.gallery
+            gallery:
+              data.gallery && data.gallery.length > 0
+                ? data.gallery
+                : config.gallery,
           };
 
           setRemoteData(newRemoteData);
           // Lưu vào cache cho lần sau
-          localStorage.setItem('wedding_config_cache', JSON.stringify(newRemoteData));
+          localStorage.setItem(
+            "wedding_config_cache",
+            JSON.stringify(newRemoteData),
+          );
         }
       } catch (error) {
         console.error("Error fetching remote config:", error);
@@ -572,17 +841,18 @@ function App() {
     AOS.init({
       duration: 1000,
       once: true,
-      easing: 'ease-out-cubic',
+      easing: "ease-out-cubic",
       offset: 100,
     });
 
     const handleScroll = () => {
-      const isNearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 800;
+      const isNearBottom =
+        window.innerHeight + window.scrollY >= document.body.offsetHeight - 800;
       setShowRsvpIcon(!isNearBottom);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
@@ -594,15 +864,40 @@ function App() {
       <Timeline />
       <RSVP />
       <BankInfo />
-      <footer className="footer" style={{ backgroundImage: `url(${getDirectLink(remoteData.config?.footerbackground || config.footerBackground || remoteData.config?.mainbackground || config.mainBackground, 1600)})` }}>
+      <footer
+        className="footer"
+        style={{
+          backgroundImage: `url(${getDirectLink(remoteData.config?.footerbackground || config.footerBackground || remoteData.config?.mainbackground || config.mainBackground, 1600)})`,
+        }}
+      >
         <div className="footer-overlay"></div>
         <div className="footer-content">
-          <p className="couple-title" data-aos="fade-up" style={{ color: 'white' }}>Thank You!</p>
-          <p data-aos="fade-up" data-aos-delay="200" style={{ color: 'rgba(255,255,255,0.9)' }}>Sự hiện diện của bạn sẽ khiến hôn lễ của chúng tôi trở nên ý nghĩa hơn bao giờ hết!</p>
+          <p
+            className="couple-title"
+            data-aos="fade-up"
+            style={{ color: "white" }}
+          >
+            Thank You!
+          </p>
+          <p
+            data-aos="fade-up"
+            data-aos-delay="200"
+            style={{ color: "rgba(255,255,255,0.9)" }}
+          >
+            Sự hiện diện của bạn sẽ khiến hôn lễ của chúng tôi trở nên ý nghĩa
+            hơn bao giờ hết!
+          </p>
         </div>
       </footer>
       {showRsvpIcon && (
-        <button className="floating-rsvp-btn" onClick={() => document.querySelector('.rsvp').scrollIntoView({ behavior: 'smooth' })}>
+        <button
+          className="floating-rsvp-btn"
+          onClick={() =>
+            document
+              .querySelector(".rsvp")
+              .scrollIntoView({ behavior: "smooth" })
+          }
+        >
           RSVP
         </button>
       )}
